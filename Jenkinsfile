@@ -1,5 +1,12 @@
 pipeline {
     agent { node { label 'AGENT-1' } }
+    options {
+        timeout(time: 1, unit: 'HOURS')
+    }
+
+    environmet {
+        USER = 'Sandhya'
+    }
  
     stages {
         stage('Build') { 
@@ -24,6 +31,14 @@ pipeline {
                //error "This is failed.."
             }
         }
+
+        stage('Example') {
+            environment {
+                AUTH = credentials('ssh')
+            }
+            steps {
+                sh 'printenv'
+            }
     }
 
     post { 
